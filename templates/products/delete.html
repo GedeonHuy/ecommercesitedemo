@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Remove This Product{% endblock %}
+
+{% block content %}
+<h2>Remove This Product</h2>
+{% if user.is_superuser or user.is_staff %}
+{% csrf_token %}
+<form method="post">
+    {% csrf_token %}
+    <h3>Are you sure you want to delete {{ product.title }}?</h3>
+    <button class="btn btn-outline-danger" type="submit">Delete</button>
+    <a class="btn btn-outline-info" href="{% url 'product_index' %}">Cancel</a>
+</form>
+{% else %}
+<p>You have to <a href="{% url 'login' %}">login</a> with an accessible account.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Product Management{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h2>Hi {{ user.username }}!</h2>
+<h4>Here's your product management site</h4>
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'user:login' %}">login</a> |
+<a href="{% url 'user:signup' %}">signup</a>
+{% endif %}
+{% if user.is_superuser or user.is_staff %}
+<div class="row">
+  <div class="col-md-1 mb-0">
+    <label style="font-weight: bold;">#</label>
+  </div>
+  <div class="col-md-4 mb-0">
+    <label style="font-weight: bold;">Name</label>
+  </div>
+  <div class="col-md-1 mb-0">
+    <label style="font-weight: bold;">Brand</label>
+  </div>
+  <div class="col-md-3 mb-0">
+    <label style="font-weight: bold;">Date Created</label>
+  </div>
+  <div class="col-md-1 mb-0">
+    <label style="font-weight: bold;">Price</label>
+  </div>
+  <div class="col-md-2 mb-0">
+    <label style="font-weight: bold;">Actions</label>
+  </div>
+</div>
+{% for p in products %}
+<div class="row">
+  <div class="col-md-1 mb-0">
+    <a>{{ forloop.counter }}</a>
+  </div>
+  <div class="col-md-4 mb-0">
+    <a>{{ p.title }}</a>
+  </div>
+  <div class="col-md-1 mb-0">
+    <a>{{ p.brand }}</a>
+  </div>
+  <div class="col-md-3 mb-0">
+    <a>{{ p.date_created }}</a>
+  </div>
+  <div class="col-md-1 mb-0">
+    <a>${{ p.price }}</a>
+  </div>
+  <div class="col-md-2 mb-0">
+    <a href="{% url 'product_update' p.id %}">Update</a>|
+    <a href="{% url 'product_detail' p.id %}">Detail</a>|
+    <a href="{% url 'product_delete' p.id %}">Delete</a>
+  </div>
+</div>
+{% endfor %}
+<div class="row">
+  <div class="col-md-2 mb-0">
+    <a class="btn btn-primary" href="{% url 'product_create' %}">Add a product</a>
+  </div>
+</div>
+{% else %}
+<p>You have to login with an accessible account.</p>
+{% endif %}
+{% endblock %}

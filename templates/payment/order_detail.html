@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load extras %}
+{% load fontawesome %}
+{% block title %}Order Detail{% endblock %}
+
+{% block content %}
+<h2>Order Detail</h2>
+<div class="row cart" style="font-weight: bolder">
+    <div class="col-md-1 mb-0">
+        #
+    </div>
+    <div class="col-md-4 mb-0">
+        Title
+    </div>
+    <div class="col-md-3 mb-0">
+        Brand
+    </div>
+    <div class="col-md-3 mb-0">
+        Price
+    </div>
+</div>
+{% for item in order_items %}
+<div class="row cart">
+    <div class="col-md-1 mb-0">
+        {{ forloop.counter }}
+    </div>
+    <div class="col-md-4 mb-0">
+        {{ item.product.title }}
+    </div>
+    <div class="col-md-3 mb-0">
+        {{ item.product.brand }}
+    </div>
+    <div class="col-md-3 mb-0">
+        ${{ item.product.price }}
+    </div>
+</div>
+{% empty %}
+<div class="row cart">
+    <div class="col-md-6 mb-0">
+        You don't have any TV yet. <a href="{% url 'home' %}">Start shopping now.</a>
+    </div>
+</div>
+{% endfor %}
+
+<button class="btn btn-secondary" onclick="goBack()">Go Back</button>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script> 
+{% endblock %}

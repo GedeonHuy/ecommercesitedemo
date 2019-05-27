@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+<h2>Profile</h2>
+{% if user.is_authenticated %}
+
+<div class="row">
+  <div class="col-md-2 mb-0">
+    <label style="font-weight: bold;">User Name</label>
+  </div>
+  <div class="col-md-10 mb-0">
+    {{ user.username }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2 mb-0">
+    <label style="font-weight: bold;">Email</label>
+  </div>
+  <div class="col-md-10 mb-0">
+    {{ user.email }}    
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2 mb-0">
+    <label style="font-weight: bold;">Full Name</label>
+  </div>
+  <div class="col-md-10 mb-0">
+    {{ user.first_name }}
+    {{ user.last_name }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-2 mb-0">
+    <label style="font-weight: bold;">Address</label>
+  </div>
+  <div class="col-md-10 mb-0">
+    {{ user.address }}
+  </div>
+</div>
+
+<p>
+  <a class="btn btn-primary" href="{% url 'update_profile' user.id %}">Update</a>
+  <a class="btn btn-outline-secondary" href="{% url 'logout' %}">Log Out</a>
+</p>
+{% else %}
+<p>You are not logged in!</p>
+<a class="btn btn-primary" href="{% url 'login' %}">login</a>
+<a class="btn btn-outline-primary" href="{% url 'signup' %}">signup</a>
+{% endif %}
+{% endblock %}

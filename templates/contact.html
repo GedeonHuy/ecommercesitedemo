@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h3>Contact us</h3>
+<p>
+    If you have any problem shopping on our site, <br/>please let us know via feedbacks at our email: onlinetv@shop.com<br/>
+    Or you can just fill in these form:
+</p>
+<form class="form-group">
+    <label for="title">Title</label>
+    <input name="title" class="form-control">
+    <label for="description">Description</label>
+    <input name="description" type="m" class="form-control">
+    <label for="email">Your email</label>
+    <input name="email" class="form-control">
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+<p>
+    We have the most dedicated delivery and customer support team <br/>that will walk with you till the end of the process.
+</p>
+{% endblock %}

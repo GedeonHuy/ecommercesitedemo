@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load extras %}
+{% load fontawesome %}
+{% block title %}Order History{% endblock %}
+
+{% block content %}
+<h2>This is your order history.</h2>
+<div class="row cart" style="font-weight: bolder">
+    <div class="col-md-1 mb-0">
+        #
+    </div>
+    <div class="col-md-2 mb-0">
+        Ref. Code
+    </div>
+    <div class="col-md-2 mb-0">
+        Owner
+    </div>
+    <div class="col-md-1 mb-0">
+        Item(s)
+    </div>
+    <div class="col-md-1 mb-0">
+        Price
+    </div>
+    <div class="col-md-2 mb-0">
+        Date Checked Out
+    </div>
+    <div class="col-md-1 mb-0">
+        Status
+    </div>
+    <div class="col-md-2 mb-0">
+    </div>
+</div>
+{% for order in orders %}
+<div class="row cart">
+    <div class="col-md-1 mb-0">
+        {{ forloop.counter }}
+    </div>
+    <div class="col-md-2 mb-0">
+        <a href="{% url 'order_detail' order.ref_code %}">
+            {{ order.ref_code }}
+        </a>
+    </div>
+    <div class="col-md-2 mb-0">
+        {{ order.owner }}
+    </div>
+    <div class="col-md-1 mb-0">
+        {{ order.get_count }}
+    </div>
+    <div class="col-md-1 mb-0">
+        ${{ order.get_cart_total }}
+    </div>
+    <div class="col-md-2 mb-0">
+        {% if order.is_checkedout %}
+        {{ order.date_checkedout }}
+        {% else %}
+        <a style="
+            font-weight: bolder;
+            color: gray;
+            ">
+            N/A
+        </a>
+        {% endif %}
+    </div>
+    <div class="col-md-1 mb-0">
+        {% if order.is_ordered %}
+        <a style="
+            font-weight: bolder;
+            color: green;
+            ">
+            Paid
+        </a>
+        {% else %}
+        <a style="
+            font-weight: bolder;
+            color: blue;
+            ">
+            Pending
+        </a>
+        {% endif %}
+    </div>
+    <div class="col-md-2 mb-0">
+        {% if not order.is_ordered %}
+        <form action="{% url 'charge' order.get_cart_total|multiply_with:100 %}" method="post">
+            {% csrf_token %}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ key }}"
+                data-description="{{ order }}" data-amount="{{ order.get_cart_total|multiply_with:100 }}"
+                data-locale="auto">
+            </script>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% empty %}
+<div class="row cart">
+    <div class="col-md-6 mb-0">
+        You don't have any order yet. <a href="{% url 'home' %}">Start shopping now.</a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

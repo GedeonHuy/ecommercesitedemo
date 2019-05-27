@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load extras %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- HOME AREA START -->
+{% if products %}
+<div class="row">
+
+  <div class="col-lg-3 side-filter-fixed">
+    <form class="form-inline" method="get" action="{% url 'search' %}">
+      <input class="form-control" type="search" placeholder="Search..." aria-label="Search" name="search" value="">
+      <button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
+    </form>
+    <div class="list-group">
+      <a href="{% url 'search_brand' 'sony' %}" class="list-group-item">Sony</a>
+      <a href="{% url 'search_brand' 'samsung' %}" class="list-group-item">Samsung</a>
+      <a href="{% url 'search_brand' 'lg' %}" class="list-group-item">LG</a>
+      <a href="{% url 'search_brand' 'sharp' %}" class="list-group-item">Sharp</a>
+      <a href="{% url 'others_filter' %}" class="list-group-item">Others</a>
+      <a href="{% url 'home' %}" class="list-group-item">All</a>
+    </div>
+
+  </div>
+  <!-- /.side_filter_fixed -->
+
+  <div class="col-lg-3 side-filter-in-row">
+    <form class="form-inline" method="get" action="{% url 'search' %}">
+      <input class="form-control" type="search" placeholder="Search..." aria-label="Search" name="search" value="">
+      <button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
+    </form>
+    <div class="list-group">
+      <a href="{% url 'search_brand' 'sony' %}" class="list-group-item">Sony</a>
+      <a href="{% url 'search_brand' 'samsung' %}" class="list-group-item">Samsung</a>
+      <a href="{% url 'search_brand' 'lg' %}" class="list-group-item">LG</a>
+      <a href="{% url 'search_brand' 'sharp' %}" class="list-group-item">Sharp</a>
+      <a href="{% url 'others_filter' %}" class="list-group-item">Others</a>
+      <a href="{% url 'home' %}" class="list-group-item">All</a>
+    </div>
+
+  </div>
+  <!-- /.side_filter_in_row -->
+
+  <div class="col-lg-9">
+
+    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active">
+          <img class="d-block img-fluid" src="{% static 'img/cover1.jpg' %}" alt="First slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block img-fluid" src="{% static 'img/cover2.jpg' %}" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block img-fluid" src="{% static 'img/cover3.jpg' %}" alt="Third slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block img-fluid" src="{% static 'img/cover4.jpg' %}" alt="Fourth slide">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <div class="row">
+
+      {% if not user.is_authenticated %}
+
+      {% for p in products %}
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100" href="{% url 'product_detail' p.id %}">
+          <a href="{% url 'product_detail' p.id %}"><img class="card-img-top" src="{% static p.image_url %}" alt=""></a>
+          <div class="card-body">
+            <h5>{{ p.brand }}</h5>
+            <h4 class="card-title">
+              <a href="{% url 'product_detail' p.id %}" style="text-decoration: none;">{{ p.title }}</a>
+            </h4>
+          </div>
+          <div class="card-footer">
+            <span style="color: #a03333; font-weight: bolder;">
+              ${{ p.price }}
+            </span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      {% for p in products %}
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+          <a href="{% url 'product_detail' p.id %}"><img class="card-img-top" src="{% static p.image_url %}" alt=""></a>
+          <div class="card-body">
+            <h5>{{ p.brand }}</h5>
+            <h4 class="card-title">
+              <a href="{% url 'product_detail' p.id %}" style="text-decoration: none;">{{ p.title }}</a>
+            </h4>
+          </div>
+          <div class="card-footer">
+            <span style="color: #a03333; font-weight: bolder;">
+              ${{ p.price }}
+            </span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% endif %}
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.col-lg-9 -->
+
+</div>
+<!-- /.row -->
+{% else %}
+<div class="loader"></div>
+{% endif %}
+{% endblock %}
+<!-- HOME AREA END -->

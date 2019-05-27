@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Product Detail{% endblock %}
+
+{% block content %}
+<h2>Product Detail</h2>
+<div class="row">
+    <div class="col-md-12 mb-0">
+        <img src="{% static product.image_url %}"></img>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 mb-0"></div>
+    <div class="col-md-5 mb-0">
+        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-success text-light">
+            <i class="fas fa-plus"></i> Add to cart
+        </a>
+        <a href="{% url 'cart' %}" class="btn btn-info text-light">
+            <i class="fas fa-shopping-cart"></i> View cart
+        </a>
+        <a href="{% url 'home' %}" class="btn btn-danger text-light">
+            <i class="fas fa-tv" aria-hidden="true"></i> Shop more
+        </a>
+        {% if user.is_staff or user.is_superuser %}
+        <a href="{% url 'product_update' product.id %}" class="btn btn-secondary text-light">
+            <i class="fas fa-pencil-alt"></i>
+        </a>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 mb-0">
+        <label style="font-weight: bold;">Name</label>
+    </div>
+    <div class="col-md-10 mb-0">
+        {{ product.title }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 mb-0">
+        <label style="font-weight: bold;">Price</label>
+    </div>
+    <div class="col-md-10 mb-0">
+        ${{ product.price }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 mb-0">
+        <label style="font-weight: bold;">Brand</label>
+    </div>
+    <div class="col-md-10 mb-0">
+        {{ product.brand }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 mb-0">
+        <label style="font-weight: bold;">Description</label>
+    </div>
+    <div class="col-md-10 mb-0">
+        {{ product.description|safe }}
+    </div>
+</div>
+
+{% endblock %}

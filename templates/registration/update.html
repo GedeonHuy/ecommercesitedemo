@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+<h2>Update Profile</h2>
+{% if form.email.value == user.email %}
+<form method="post">
+  {% csrf_token %}
+  <div class="form-row">
+    <div class="form-group col-md-6 mb-0">
+      {{ form.username|as_crispy_field }}
+    </div>
+    <div class="form-group col-md-6 mb-0">
+      {{ form.email|as_crispy_field }}
+    </div>
+  </div>
+  <div class="form-row">
+    <div>
+      {{ form.password|as_crispy_field }}
+      <a class="" href="{% url 'change_password' %}">Change Password</a>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6 mb-0">
+      {{ form.first_name|as_crispy_field }}
+    </div>
+    <div class="form-group col-md-6 mb-0">
+      {{ form.last_name|as_crispy_field }}
+    </div>
+  </div>
+  {{ form.address|as_crispy_field }}
+  <button type="submit" class="btn btn-primary" type="submit">Save</button>
+</form>
+{% else %}
+<p>You're not allowed to edit others' profiles. <br>
+  If this account is not yours, you have to <a href="{% url 'logout' %}">logout</a></p>
+{% endif %}
+{% endblock %}

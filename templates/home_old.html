@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load extras %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-2 mb-0">
+        <label style="font-weight: bold;">#</label>
+    </div>
+    <div class="col-md-3 mb-0">
+        <label style="font-weight: bold;">Name</label>
+    </div>
+    <div class="col-md-2 mb-0">
+        <label style="font-weight: bold;">Price</label>
+    </div>
+    <div class="col-md-2 mb-0">
+        <label style="font-weight: bold;">Date Created</label>
+    </div>
+    <div class="col-md-1 mb-0">
+        <label style="font-weight: bold;"></label>
+    </div>
+    <div class="col-md-1 mb-0">
+        <label style="font-weight: bold;"></label>
+    </div>
+</div>
+{% if not user.is_authenticated %}
+{% for p in products %}
+<div class="row">
+    <div class="col-md-2 mb-0">
+        <a>{{ forloop.counter }}</a>
+    </div>
+    <div class="col-md-3 mb-0">
+        <a>{{ p.title }}</a>
+    </div>
+    <div class="col-md-2 mb-0">
+        <a>{{ p.price }}</a>
+    </div>
+    <div class="col-md-2 mb-0">
+        <a>{{ p.date_created }}</a>
+    </div>
+    <div class="col-md-2 mb-0">
+        <a class="btn btn-outline-success" href="{% url 'login' %}">
+            Login to buy
+        </a>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+{% for p in products %}
+<div class="row">
+    <div class="col-md-2 mb-0">
+        <a>{{ forloop.counter }}</a>
+    </div>
+    <div class="col-md-3 mb-0">
+        <a>{{ p.title }}</a>
+    </div>
+    <div class="col-md-2 mb-0">
+        <a>{{ p.price }}</a>
+    </div>
+    <div class="col-md-2 mb-0">
+        <a>{{ p.date_created }}</a>
+    </div>
+    <div class="col-md-2 mb-0">
+        <a class="btn btn-outline-success" href="{% url 'add_to_cart' p.id %}">
+            <i class="fas fa-plus"></i>
+        </a>
+        <a class="btn btn-outline-info" href="{% url 'cart' %}">
+            <i class="fas fa-shopping-cart"></i>
+            <!--       <form action="{% url 'charge' p.price|multiply_with:100 %}" method="post">
+              {% csrf_token %}
+              <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-key="{{ key }}"
+                      data-description="OnlineTVShop In The Template"
+                      data-amount="{{ p.price|multiply_with:100 }}"
+                      data-locale="auto">
+              </script>
+            </form> -->
+        </a>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}
