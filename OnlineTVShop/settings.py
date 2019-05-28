@@ -145,7 +145,7 @@ STATICFILES_DIRS = [
 
 # Stripe API keys
 
-STRIPE_SECRET_KEY = 'sk_test_SK4XqN2hN2591d9BetSn1wbL00uUJ88Qlh'
+STRIPE_SECRET_KEY = '<secret stripe key>'
 STRIPE_PUBLISHABLE_KEY = 'pk_test_eeLtOVjW7n5WdUILnxJD35vW00YkgwzfZ0'
 
 # default uses locally shipped version at 'fontawesome/css/font-awesome.min.css'
