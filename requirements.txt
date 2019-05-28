@@ -5,6 +5,11 @@ colorama==0.4.1
 Django==2.2.1
 django-crispy-forms==1.7.2
 django-fontawesome==1.0
+django-modelcluster==4.4
+django-taggit==0.24.0
+django-treebeard==4.3
+draftjs-exporter==2.1.5
+html5lib==1.0.1
 idna==2.8
 isort==4.3.20
 lazy-object-proxy==1.4.1
