@@ -86,9 +86,9 @@ WSGI_APPLICATION = 'OnlineTVShop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'onlinetvshopdb',
-        'USER': 'gideon',
-        'PASSWORD': '0963722007@A',
+        'NAME': '<yourdb>',
+        'USER': '<your db username>',
+        'PASSWORD': '<your password>',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
